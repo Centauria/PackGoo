@@ -46,8 +46,9 @@ list(TRANSFORM publicHeaderFiles PREPEND ${srcDir}/)
 
 add_library(lua ${srcFiles})
 
-target_compile_definitions(lua PRIVATE $<$<PLATFORM_ID:Linux>:LUA_USE_LINUX
-                                       LUA_COMPAT_5_2> LUA_BUILD_AS_DLL)
+target_compile_definitions(
+  lua PRIVATE $<$<PLATFORM_ID:Linux>:LUA_USE_LINUX LUA_COMPAT_5_2>
+              $<$<PLATFORM_ID:Windows>:LUA_BUILD_AS_DLL>)
 
 target_compile_options(
   lua
