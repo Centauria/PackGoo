@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.12)
 #   DESCRIPTION "Lua build for a project subdirectory"
 #   LANGUAGES C)
 
-option(BUILD_SHARED_LIBS "Build as shared library" OFF)
+option(BUILD_SHARED_LIBS "Build as shared library" ON)
 
 set(srcDir ${PROJECT_SOURCE_DIR}/3rd-party/lua)
 
