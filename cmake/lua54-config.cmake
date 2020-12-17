@@ -1,9 +1,4 @@
 cmake_minimum_required(VERSION 3.12)
-# project(
-#   lua-cmake
-#   VERSION 1.0.0
-#   DESCRIPTION "Lua build for a project subdirectory"
-#   LANGUAGES C)
 
 option(BUILD_SHARED_LIBS "Build as shared library" ON)
 
@@ -52,7 +47,7 @@ list(TRANSFORM publicHeaderFiles PREPEND ${srcDir}/)
 add_library(lua ${srcFiles})
 
 target_compile_definitions(lua PRIVATE $<$<PLATFORM_ID:Linux>:LUA_USE_LINUX
-                                       LUA_COMPAT_5_2>)
+                                       LUA_COMPAT_5_2> LUA_BUILD_AS_DLL)
 
 target_compile_options(
   lua
