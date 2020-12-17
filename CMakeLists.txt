@@ -23,16 +23,32 @@ find_package(sol2 REQUIRED)
 find_package(Lua53 REQUIRED)
 include_directories(${LUA_INCLUDE_DIR})
 
-include(FindPkgConfig)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 
-pkg_search_module(SDL2 REQUIRED sdl2)
-pkg_search_module(SDL2_IMAGE REQUIRED SDL2_image>=2.0.0)
+if(APPLE)
+  include(FindPkgConfig)
+  pkg_search_module(SDL2 REQUIRED sdl2)
+  pkg_search_module(SDL2_IMAGE REQUIRED SDL2_image>=2.0.0)
+endif(APPLE)
 
 include_directories(${SDL2_INCLUDE_DIRS})
-include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
+include_directories(${SDL2_image_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADER_FILES})
 target_link_libraries(${PROJECT_NAME} spdlog sol2)
 target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIB})
-target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIB})
+target_link_libraries(${PROJECT_NAME} ${SDL2_image_LIB})
+
+if(MSVC)
+  add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND
+      ${CMAKE_COMMAND} -E copy_if_different
+      "${PROJECT_SOURCE_DIR}/lib/SDL2_image.dll"
+      "${PROJECT_SOURCE_DIR}/lib/libpng16-16.dll"
+      "${PROJECT_SOURCE_DIR}/lib/zlib1.dll"
+      $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+endif(MSVC)

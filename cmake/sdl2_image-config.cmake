@@ -1,0 +1,10 @@
+if(MSVC)
+  set(SDL2_image_PREFIX "E:/Portable/SDL2_image-2.0.5")
+  set(SDL2_image_LIB "SDL2_image.lib")
+  set(SDL2_image_LIBDIR "${SDL2_image_PREFIX}/lib/x64")
+  set(SDL2_image_INCLUDE_DIRS "${SDL2_image_PREFIX}/include")
+  set(SDL2_image_LIBRARIES
+      "-L${SDL2_image_LIBDIR} -Wl,--enable-new-dtags -lSDL2_image ")
+  string(STRIP "${SDL2_LIBRARIES}" SDL2_image_LIBRARIES)
+  set(SDL2_image_FOUND TRUE)
+endif(MSVC)

@@ -1,4 +1,6 @@
-﻿#include <sol/sol.hpp>
+﻿#define SDL_MAIN_HANDLED
+
+#include <sol/sol.hpp>
 #include <cassert>
 #include <spdlog/spdlog.h>
 
