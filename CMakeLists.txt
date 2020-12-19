@@ -49,6 +49,7 @@ if(MSVC OR MINGW)
     POST_BUILD
     COMMAND
       ${CMAKE_COMMAND} -E copy_if_different
+      "${SDL2_LIBDIR}/SDL2.dll"
       "${SDL2_image_LIBDIR}/SDL2_image.dll"
       "${SDL2_image_LIBDIR}/libpng16-16.dll"
       "${SDL2_image_LIBDIR}/zlib1.dll"
