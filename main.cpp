@@ -5,6 +5,7 @@
 #include <spdlog/spdlog.h>
 
 #include "display.h"
+#include "sprite.h"
 #include "errors.h"
 
 int main() {
@@ -13,7 +14,16 @@ int main() {
         Display disp("Nice");
         bool running = true;
         SDL_Event e;
-        disp.add_image("res/1.png");
+        auto sprite = new Sprite(
+            "res/1.png",
+            SDL_Rect{0, 0, 100, 100}
+            );
+        auto sprite2 = new Sprite(
+            "res/1.png",
+            SDL_Rect{100, 100, 100, 100}
+            );
+        disp.add_sprite(sprite);
+        disp.add_sprite(sprite2);
         while (running) {
             disp.draw();
             while (SDL_PollEvent(&e) != 0) {
@@ -23,8 +33,7 @@ int main() {
             }
         }
         spdlog::warn("Gone.");
-    } catch (const InitError &err) {
-        spdlog::error("Error while initializing SDL: {0}", err.what());
+    } catch (const SDLError& err) {
         return 1;
     }
     sol::state lua;
