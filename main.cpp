@@ -7,6 +7,7 @@
 #include "display.h"
 #include "sprite.h"
 #include "errors.h"
+#include "pool.h"
 
 int main() {
     spdlog::info("OK, now we are on.");
@@ -24,6 +25,11 @@ int main() {
             );
         disp.add_sprite(sprite);
         disp.add_sprite(sprite2);
+        auto a = Pool<Sprite*>();
+        a.add("123", sprite);
+        a.add("???", sprite2);
+        spdlog::info(a.size());
+        spdlog::info(a.is_full());
         while (running) {
             disp.draw();
             while (SDL_PollEvent(&e) != 0) {
@@ -33,7 +39,7 @@ int main() {
             }
         }
         spdlog::warn("Gone.");
-    } catch (const SDLError& err) {
+    } catch (const SDLError&) {
         return 1;
     }
     sol::state lua;
