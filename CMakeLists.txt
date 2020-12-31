@@ -11,6 +11,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_THREAD_SAFE")
 
 include_directories(include)
 link_directories(lib)
+set(CMAKE_LIBRARY_ARCHITECTURE x64)
+set(FIND_LIBRARY_USE_LIB64_PATHS TRUE)
 
 add_subdirectory(3rd-party/spdlog)
 find_package(spdlog REQUIRED)
@@ -41,7 +43,8 @@ target_link_libraries(${PROJECT_NAME} spdlog sol2)
 target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} ${SDL2_image_LIBRARIES})
-target_link_directories(${PROJECT_NAME} PRIVATE ${SDL2_LIBDIR})
+target_link_directories(${PROJECT_NAME} PRIVATE ${SDL2_LIBDIR}
+                        ${SDL2_image_LIBDIR})
 
 if(MSVC OR MINGW)
   add_custom_command(
@@ -55,10 +58,9 @@ if(MSVC OR MINGW)
       "${SDL2_image_LIBDIR}/zlib1.dll"
       $<TARGET_FILE_DIR:${PROJECT_NAME}>)
   add_custom_command(
-      TARGET ${PROJECT_NAME}
-      POST_BUILD
-      COMMAND
-      ${CMAKE_COMMAND} -E copy_directory
-      ${PROJECT_SOURCE_DIR}/res
-      $<TARGET_FILE_DIR:${PROJECT_NAME}>/res)
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${PROJECT_SOURCE_DIR}/res
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>/res)
 endif()
