@@ -3,11 +3,14 @@
 #include <sol/sol.hpp>
 #include <cassert>
 #include <spdlog/spdlog.h>
+#include <nlohmann/json.hpp>
 
 #include "display.h"
 #include "sprite.h"
 #include "errors.h"
 #include "pool.h"
+
+using json = nlohmann::json;
 
 int main() {
     spdlog::info("OK, now we are on.");
@@ -47,5 +50,9 @@ int main() {
     lua.set_function("beep", [&x] { ++x; });
     lua.script("beep()");
     assert(x == 1);
+    json j;
+    j["nice"] = "work";
+    j["good"] = "job";
+    spdlog::info(j.dump());
     return 0;
 }
