@@ -15,10 +15,7 @@ set(CMAKE_LIBRARY_ARCHITECTURE x64)
 set(FIND_LIBRARY_USE_LIB64_PATHS TRUE)
 
 add_subdirectory(3rd-party/spdlog)
-find_package(spdlog REQUIRED)
-
 add_subdirectory(3rd-party/sol2)
-find_package(sol2 REQUIRED)
 
 find_package(Lua54 REQUIRED)
 include_directories(${LUA_INCLUDE_DIR})
