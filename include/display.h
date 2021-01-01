@@ -1,3 +1,4 @@
+#pragma once
 #include <SDL.h>
 #include <string>
 #include <vector>
@@ -10,7 +11,7 @@ class Display {
     std::vector<Sprite*> m_sprites;
 
 public:
-    Display(const char* window_name, Uint32 flags = SDL_INIT_EVERYTHING);
+    Display(const char* window_name,int width,int height);
     virtual ~Display();
     void draw();
     bool add_sprite(Sprite*);

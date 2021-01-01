@@ -9,13 +9,15 @@
 #include "sprite.h"
 #include "errors.h"
 #include "pool.h"
+#include "game.h"
 
 using json = nlohmann::json;
 
 int main() {
     spdlog::info("OK, now we are on.");
+    auto g = Game();
     try {
-        Display disp("Nice");
+        Display disp("Nice", 800, 600);
         bool running = true;
         SDL_Event e;
         auto sprite = new Sprite(

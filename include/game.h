@@ -1,5 +1,7 @@
 #pragma once
-#include <SDL.h>
+#include <vector>
+
+#include "display.h"
 
 class Game {
 public:
@@ -11,6 +13,6 @@ private:
     void process_input();
     void update();
     void generate_output();
-    SDL_Window* m_window_;
-    bool m_running;
+    std::vector<int*> m_windows_;
+    volatile bool m_running_;
 };
