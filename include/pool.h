@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-template <class T>
+template <typename T>
 class Pool {
     unsigned int m_capacity_;
     std::map<std::string, T> m_vol_;
