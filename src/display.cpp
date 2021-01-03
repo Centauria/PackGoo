@@ -12,17 +12,29 @@
 #include <iostream>
 #include <string>
 
-Display::Display(const char* window_name, int width,int height) {
-
-    if (SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_SHOWN, &m_window,
-                                    &m_renderer) != 0)
-        throw SDLError();
+Display::Display(const char* window_name, int width, int height,
+                 bool fullscreen) {
+    if (fullscreen) {
+        if (SDL_CreateWindowAndRenderer(
+                width, height,
+                SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP |
+                    SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI,
+                &m_window, &m_renderer) != 0)
+            throw SDLError();
+    } else {
+        if (SDL_CreateWindowAndRenderer(
+                width, height,
+                SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI,
+                &m_window, &m_renderer) != 0)
+            throw SDLError();
+    }
     SDL_SetWindowTitle(m_window, window_name);
-    int img_flags = IMG_INIT_JPG | IMG_INIT_PNG;
-    if (!(IMG_Init(img_flags) & img_flags)) throw SDLError();
 }
 
 Display::~Display() {
+    for (auto const& sprite : m_sprites) {
+        delete sprite;
+    }
     SDL_DestroyWindow(m_window);
     SDL_DestroyRenderer(m_renderer);
     SDL_Quit();

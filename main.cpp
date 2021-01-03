@@ -14,39 +14,10 @@
 using json = nlohmann::json;
 
 int main() {
+    spdlog::set_level(spdlog::level::level_enum::debug);
     spdlog::info("OK, now we are on.");
     auto g = Game();
-    try {
-        Display disp("Nice", 800, 600);
-        bool running = true;
-        SDL_Event e;
-        auto sprite = new Sprite(
-            "res/1.png",
-            SDL_Rect{0, 0, 100, 100}
-            );
-        auto sprite2 = new Sprite(
-            "res/1.png",
-            SDL_Rect{100, 100, 100, 100}
-            );
-        disp.add_sprite(sprite);
-        disp.add_sprite(sprite2);
-        auto a = Pool<Sprite*>();
-        a.add("123", sprite);
-        a.add("???", sprite2);
-        spdlog::info(a.size());
-        spdlog::info(a.is_full());
-        while (running) {
-            disp.draw();
-            while (SDL_PollEvent(&e) != 0) {
-                if (e.type == SDL_QUIT) {
-                    running = false;
-                }
-            }
-        }
-        spdlog::warn("Gone.");
-    } catch (const SDLError&) {
-        return 1;
-    }
+    g.run();
     sol::state lua;
     int x = 0;
     lua.set_function("beep", [&x] { ++x; });

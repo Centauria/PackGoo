@@ -11,7 +11,7 @@ class Display {
     std::vector<Sprite*> m_sprites;
 
 public:
-    Display(const char* window_name,int width,int height);
+    Display(const char* window_name, int width, int height, bool fullscreen);
     virtual ~Display();
     void draw();
     bool add_sprite(Sprite*);
