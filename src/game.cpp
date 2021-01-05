@@ -23,8 +23,8 @@ bool Game::initialize() {
     if (!(IMG_Init(img_flags) & img_flags)) throw SDLError();
 
     std::string conf_save_path{"config/user/default.json"};
-    if (!fs::exists(fs::path(conf_save_path))) {
-        generate_config();
+    if (!fs::exists(conf_save_path)) {
+        fs::copy_file("config/default.json", "config/user/default.json");
     }
     auto cfg_str = read_all(conf_save_path);
     auto config = json::parse(cfg_str);
@@ -40,12 +40,6 @@ bool Game::initialize() {
     m_display_ = new Display(NAME, width, height, fullscreen);
     m_running_ = true;
     return true;
-}
-
-void Game::generate_config() {
-    fs::path src("config/default.json");
-    fs::path dst("config/user/default.json");
-    fs::copy_file(src, dst);
 }
 
 void Game::run() {

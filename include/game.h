@@ -16,7 +16,6 @@ public:
     void exit();
 
 private:
-    void generate_config();
     void process_input();
     void update();
     void generate_output();
