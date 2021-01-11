@@ -10,3 +10,9 @@
 [submodule "3rd-party/json"]
 	path = 3rd-party/json
 	url = https://github.com/nlohmann/json
+[submodule "3rd-party/corrade"]
+	path = 3rd-party/corrade
+	url = https://github.com/mosra/corrade
+[submodule "3rd-party/magnum"]
+	path = 3rd-party/magnum
+	url = https://github.com/mosra/magnum
