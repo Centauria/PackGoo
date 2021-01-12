@@ -12,6 +12,8 @@ find_package(Magnum REQUIRED GL Shaders Sdl2Application)
 
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
 
+find_package(Lua54 REQUIRED)
+
 add_executable(${PROJECT_NAME} WIN32 main.cpp)
 target_link_libraries(${PROJECT_NAME} spdlog sol2)
 target_link_libraries(${PROJECT_NAME} nlohmann_json::nlohmann_json)

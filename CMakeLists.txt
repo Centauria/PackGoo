@@ -24,9 +24,9 @@ set(WITH_SHADERTOOLS ON CACHE BOOL "" FORCE)
 add_subdirectory(3rd-party/magnum EXCLUDE_FROM_ALL)
 
 add_subdirectory(3rd-party/spdlog EXCLUDE_FROM_ALL)
-add_subdirectory(3rd-party/sol2 EXCLUDE_FROM_ALL)
 
-find_package(Lua54 REQUIRED)
+set(SOL2_LUA_VERSION 5.4.2)
+add_subdirectory(3rd-party/sol2 EXCLUDE_FROM_ALL)
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 set(JSON_Install OFF CACHE INTERNAL "")

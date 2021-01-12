@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 option(BUILD_SHARED_LIBS "Build as shared library" ON)
 
-set(srcDir ${PROJECT_SOURCE_DIR}/3rd-party/lua)
+set(srcDir ${CMAKE_SOURCE_DIR}/3rd-party/lua)
 
 set(srcFiles
     lapi.c
