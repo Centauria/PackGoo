@@ -84,3 +84,5 @@ add_library(lua::header ALIAS lua-header)
 
 set(LUA_INCLUDE_DIR ${includeDir})
 set(LUA_LIBRARIES lua::lib)
+
+mark_as_advanced(${LUA_INCLUDE_DIR})
