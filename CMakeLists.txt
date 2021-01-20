@@ -6,15 +6,19 @@ if(MSVC OR MINGW)
     set(CMAKE_PREFIX_PATH "E:\\Portable\\SDL2-2.0.12" ${CMAKE_PREFIX_PATH})
     set(CMAKE_PREFIX_PATH "D:\\PF\\VulkanSDK\\1.2.162.0" ${CMAKE_PREFIX_PATH})
 endif()
+if(APPLE)
+    set(MACOSX_DEPLOYMENT_TARGET 10.15)
+endif()
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "-D_THREAD_SAFE" ${CMAKE_CXX_FLAGS})
 
 set(CMAKE_LIBRARY_ARCHITECTURE x64)
 set(FIND_LIBRARY_USE_LIB64_PATHS TRUE)
 
 add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+
+add_compile_definitions("_THREAD_SAFE")
 
 add_subdirectory(3rd-party/corrade EXCLUDE_FROM_ALL)
 set(WITH_SDL2APPLICATION ON CACHE BOOL "" FORCE)

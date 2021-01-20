@@ -14,10 +14,14 @@ set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
 
 find_package(Lua54 REQUIRED)
 
-add_executable(${PROJECT_NAME} WIN32 main.cpp)
+add_executable(${PROJECT_NAME} main.cpp)
+if(WIN32)
+    target_link_libraries(${PROJECT_NAME} lua::sharedlib)
+elseif(UNIX)
+    target_link_libraries(${PROJECT_NAME} lua::lib)
+endif()
 target_link_libraries(${PROJECT_NAME} spdlog sol2)
 target_link_libraries(${PROJECT_NAME} nlohmann_json::nlohmann_json)
-target_link_libraries(${PROJECT_NAME} lua::lib)
 target_link_libraries(${PROJECT_NAME} 
     Corrade::Main
     Magnum::Application

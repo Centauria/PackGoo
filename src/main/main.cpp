@@ -14,10 +14,10 @@ namespace Magnum {
 namespace Examples {
 
 class TriangleExample : public Platform::Application {
-   public:
+public:
     explicit TriangleExample(const Arguments& arguments);
 
-   private:
+private:
     void drawEvent() override;
 
     GL::Mesh _mesh;
@@ -49,7 +49,7 @@ TriangleExample::TriangleExample(const Arguments& arguments)
     _mesh.setCount(3).addVertexBuffer(std::move(buffer), 0,
                                       Shaders::VertexColor2D::Position{},
                                       Shaders::VertexColor2D::Color3{});
-    
+
     sol::state lua;
     int x = 0;
     lua.set_function("beep", [&x] { ++x; });
