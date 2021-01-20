@@ -50,9 +50,17 @@ list(TRANSFORM SRC_LUA PREPEND ${srcDir}/)
 list(TRANSFORM HEADERS PREPEND ${srcDir}/)
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_SHARED_LINKER_FLAGS "-Wl" ${CMAKE_SHARED_LINKER_FLAGS})
 
-add_compile_options(
+add_library(lua-lib ${SRC_CORE} ${SRC_LIB})
+target_compile_definitions(
+    lua-lib PRIVATE
+    $<$<PLATFORM_ID:Linux>:LUA_USE_LINUX LUA_COMPAT_5_2>
+    $<$<PLATFORM_ID:Windows>:LUA_BUILD_AS_DLL _CRT_SECURE_NO_WARNINGS>
+    $<$<PLATFORM_ID:MacOS>:LUA_USE_LINUX>
+)
+target_compile_options(
+    lua-lib PRIVATE
+    $<$<OR:$<C_COMPILER_ID:AppleClang>,$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:
     -Wextra
     -Wshadow
     -Wsign-compare
@@ -71,15 +79,7 @@ add_compile_options(
     -Wold-style-cast
     -fno-stack-protector
     -fno-common
-    -march=native
-)
-
-add_library(lua-lib ${SRC_CORE} ${SRC_LIB})
-target_compile_definitions(
-    lua-lib PRIVATE
-    $<$<PLATFORM_ID:Linux>:LUA_USE_LINUX LUA_COMPAT_5_2>
-    $<$<PLATFORM_ID:Windows>:LUA_BUILD_AS_DLL _CRT_SECURE_NO_WARNINGS>
-    $<$<PLATFORM_ID:MacOS>:LUA_USE_LINUX>
+    -march=native>
 )
 set_target_properties(lua-lib PROPERTIES OUTPUT_NAME lua)
 
@@ -89,6 +89,29 @@ target_compile_definitions(
     $<$<PLATFORM_ID:Linux>:LUA_USE_LINUX LUA_COMPAT_5_2>
     $<$<PLATFORM_ID:Windows>:LUA_BUILD_AS_DLL _CRT_SECURE_NO_WARNINGS>
     $<$<PLATFORM_ID:MacOS>:LUA_USE_LINUX>
+)
+target_compile_options(
+    lua-sharedlib PRIVATE
+    $<$<OR:$<C_COMPILER_ID:AppleClang>,$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:
+    -Wextra
+    -Wshadow
+    -Wsign-compare
+    -Wundef
+    -Wwrite-strings
+    -Wredundant-decls
+    -Wdisabled-optimization
+    -Waggregate-return
+    -Wdouble-promotion
+    -Wdeclaration-after-statement
+    -Wmissing-prototypes
+    -Wnested-externs
+    -Wstrict-prototypes
+    -Wc++-compat
+    -Wold-style-definition
+    -Wold-style-cast
+    -fno-stack-protector
+    -fno-common
+    -march=native>
 )
 set_target_properties(lua-sharedlib PROPERTIES OUTPUT_NAME lua)
 
